@@ -1,0 +1,109 @@
+# project specific folders/files to ignore
+.coverage
+.webassets-cache
+.sass-cache
+build
+coverage.xml
+dist
+docs/_build
+nosetests.xml
+pylint.out
+
+# global folders/files to ignore
+.DS_Store
+
+
+*.pyc
+*~
+*.db
+*.db-journal
+
+#temporary
+*.egg
+*egg-info*
+*tmp
+*bak
+
+#
+# hidden Editor Files
+#
+# Eclipse / pydev
+.iml
+.project
+.pydevproject
+.settings
+# komodo settings
+*.komodoproject
+# pycharm
+.idea
+atlassian-ide-plugin.xml
+# Sublime Text
+*.sublime*
+# SublimeCodeIntel
+.codeintel
+
+# rope
+.ropeproject
+
+# For when mercurial and git are in the same working dir
+.hg
+.hgignore
+
+#nose
+.noseids
+/bin/activate
+/bin/activate.csh
+/bin/activate.fish
+/bin/activate_this.py
+/bin/easy_install
+/bin/easy_install-2.7
+/bin/pip
+/bin/pip-2.7
+/bin/python
+/bin/python2.7
+/include/python2.7
+/lib/python2.7/_abcoll.py
+/lib/python2.7/abc.py
+/lib/python2.7/codecs.py
+/lib/python2.7/config
+/lib/python2.7/copy_reg.py
+/lib/python2.7/distutils/distutils.cfg
+/lib/python2.7/distutils/__init__.py
+/lib/python2.7/encodings
+/lib/python2.7/fnmatch.py
+/lib/python2.7/genericpath.py
+/lib/python2.7/lib-dynload
+/lib/python2.7/linecache.py
+/lib/python2.7/locale.py
+/lib/python2.7/no-global-site-packages.txt
+/lib/python2.7/ntpath.py
+/lib/python2.7/orig-prefix.txt
+/lib/python2.7/os.py
+/lib/python2.7/posixpath.py
+/lib/python2.7/re.py
+/lib/python2.7/site-packages/easy-install.pth
+/lib/python2.7/site-packages/setuptools.pth
+/lib/python2.7/site.py
+/lib/python2.7/sre_compile.py
+/lib/python2.7/sre_constants.py
+/lib/python2.7/sre_parse.py
+/lib/python2.7/sre.py
+/lib/python2.7/stat.py
+/lib/python2.7/types.py
+/lib/python2.7/UserDict.py
+/lib/python2.7/warnings.py
+/lib/python2.7/_weakrefset.py
+/local
+
+/cover/perses76-pylint-pycharm-e238192/.gitignore
+/perses76-pylint-pycharm-e238192/pylint_pycharm/convertor.py
+/perses76-pylint-pycharm-e238192/pylint_pycharm/__init__.py
+/perses76-pylint-pycharm-e238192/pylint_pycharm/sample_package/__init__.py
+/perses76-pylint-pycharm-e238192/pylint_pycharm/sample_package/sample_module.py
+/perses76-pylint-pycharm-e238192/pylint_pycharm/sample.py
+/perses76-pylint-pycharm-e238192/pylint_pycharm/tests.py
+/perses76-pylint-pycharm-e238192/README
+/perses76-pylint-pycharm-e238192/scripts/__init__.py
+/perses76-pylint-pycharm-e238192/scripts/pylint-pycharm
+/perses76-pylint-pycharm-e238192/setup.py
+/perses76-pylint-pycharm-e238192/.gitignore
