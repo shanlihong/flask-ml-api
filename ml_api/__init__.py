@@ -11,13 +11,13 @@ def register_api(app, view, endpoint, url, pk='id', pk_type='int'):
     view_func = view.as_view(endpoint)
 
     if pk:
-        app.add_url_rule(url, defaults={pk: None},
-            view_func=view_func, methods=['GET',])
+        app.add_url_rule(url, defaults={pk: None}, view_func=view_func, methods=['GET'])
         app.add_url_rule(url, view_func=view_func, methods=['POST',])
         app.add_url_rule('%s<%s:%s>' % (url, pk_type, pk),
             view_func=view_func, methods=['GET', 'PUT', 'DELETE'])
     else:
-        app.add_url_rule(url, view_func=view_func, methods=['POST', 'PUT'])
+        app.add_url_rule(url, defaults={pk: None}, view_func=view_func,
+            methods=['GET', 'HEAD', 'POST', 'PUT', 'OPTIONS', 'DELETE'])
 
 
 def create_app(debug=False):
@@ -39,18 +39,18 @@ def create_app(debug=False):
     from .blueprints.site.views import site
     app.register_blueprint(site, url_prefix='/')
 
-    from .blueprints.admin.views import admin
-    app.register_blueprint(admin, url_prefix='/admin')
-
-    from .blueprints.api.views import api
-    app.register_blueprint(admin, url_prefix='/api/v1')
-
     # Register API classes
-    #import ml_api.blueprints.api.views
+    from ml_api.blueprints.api.views import (BaseAPI,
+                                             TrainingSetsAPI,
+                                             PredictionsAPI)
 
-    #register_api(app, AdminAPI, 'admin_api', '/admin', pk=None)
-    #register_api(app, TrainingAPI, 'training_api', '/training/', pk='training_id')
-    #register_api(app, PredictionsAPI, 'predictions_api', '/predictions/', pk='prediction_id')
+    register_api(app, BaseAPI, 'base_api', '/api/v1/')
+
+    register_api(app, TrainingSetsAPI,
+        'training_sets_api', '/api/v1/training-sets/', pk='ts_id')
+
+    register_api(app, PredictionsAPI,
+        'predictions_api', '/api/v1/predictions/', pk='p_id')
 
     # Setup a db connection
     app.db = None
