@@ -1,8 +1,86 @@
-<html>
-<head>
+{% extends "base.html" %}
 
-</head>
-<body>
-<h1>HELLO WORLD</h1>
-</body>
-</html>
+{% block content %}
+
+<section id="class_management">
+    <div class="row">
+        <div class="span12">
+            <form class="form-horizontal well">
+                <fieldset>
+                    <legend>Manage Classes</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="new_class">New Class</label>
+                        <div class="controls">
+                            <input type="text" class="input-large" id="new_class">
+                            <button id="add_class_button" type="submit" class="btn btn-primary">Add Class</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="span12">
+            <div class="well clearfix">
+                <ul id="classes" class="horizontal">
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="training">
+    <div class="row">
+        <div class="span12">
+            <form class="form-horizontal well">
+                <fieldset>
+                    <legend>Training Data</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="training_text">Text to classify</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge" id="training_text">
+                            <select id="training_classes">
+                                <option value="default">Select a class</option>
+                            </select>
+                            <button id="add_training_sample_button" type="submit" class="btn btn-primary">Add Training Sample</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="span12">
+            <div class="well clearfix">
+                <ul id="training_samples" class="horizontal">
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="predictions">
+    <div class="row">
+        <div class="span12">
+            <form class="form-horizontal well">
+                <fieldset>
+                    <legend>Classify New Text</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="new_classification_text">Text To Classify</label>
+                        <div class="controls">
+                            <input type="text" class="input-large" id="new_classification_text">
+                            <button id="new_classification_button" type="submit" class="btn btn-primary">Classify</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="span12">
+            <div class="well clearfix">
+                <ul id="classifications" class="horizontal">
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

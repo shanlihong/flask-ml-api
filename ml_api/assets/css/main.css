@@ -1,0 +1,26 @@
+.remove-class {
+    margin-left: 20px;
+    color: white;
+}
+
+.remove-sample, .remove-classification {
+    margin-left: 20px;
+    color: #4376DE;
+}
+
+ul.horizontal {
+    list-style: none;
+    clear: both;
+}
+
+ul.horizontal li {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+ul.horizontal li.outline {
+    border: 1px solid #4376DE;
+    padding: 5px;
+    border-radius: 5px;
+}
