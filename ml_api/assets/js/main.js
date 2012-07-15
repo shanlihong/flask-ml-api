@@ -1,6 +1,14 @@
 $(document).ready(function() {
 
     //
+    // Hide data wells on load
+    //
+    $("#classes_well").hide();
+    $("#samples_well").hide();
+    $("#classifications_well").hide();
+
+
+    //
     // Add New Class
     //
     $("#add_class_button").click(function(e) {
@@ -17,6 +25,8 @@ $(document).ready(function() {
 
         // Reset text box
         $("#new_class").val("");
+
+        $("#classes_well").show();
     });
 
     //
@@ -33,6 +43,27 @@ $(document).ready(function() {
 
         // Also, remove option from our select boxes
         $("#training_classes option[value='" + id + "']").remove();
+
+        if ($(".remove-class").length == 0) {
+            // Hide the well
+            $("#classes_well").hide();
+        }
+    });
+
+    //
+    // Delete Existing Classes
+    //
+    $(".clear-classes").live("click", function(e) {
+        e.preventDefault();
+
+        // Remove the li's
+        $("#classes").empty();
+
+        // Remove from select
+        $("#training_classes").empty().append('<option value="default">Select a class</option>')
+
+        // Hide the well
+        $("#classes_well").hide();
     });
 
     //
@@ -53,6 +84,8 @@ $(document).ready(function() {
 
         // Reset select
         $("#training_classes").val("default");
+
+        $("#samples_well").show();
     });
 
     //
@@ -66,6 +99,24 @@ $(document).ready(function() {
 
         // Remove the li
         $(this).parent().remove();
+
+        if ($(".remove-sample").length == 0) {
+            // Hide the well
+            $("#samples_well").hide();
+        }
+    });
+
+    //
+    // Delete Existing Samples
+    //
+    $(".clear-samples").live("click", function(e) {
+        e.preventDefault();
+
+        // Remove the li's
+        $("#training_samples").empty();
+
+        // Hide the well
+        $("#samples_well").hide();
     });
 
     //
@@ -84,6 +135,8 @@ $(document).ready(function() {
 
         // Reset text box
         $("#new_classification_text").val("");
+
+        $("#classifications_well").show();
     });
 
     //
@@ -97,6 +150,23 @@ $(document).ready(function() {
 
         // Remove the li
         $(this).parent().remove();
+
+        if ($(".remove-classification").length == 0) {
+            // Hide the well
+            $("#classifications_well").hide();
+        }
     });
 
+    //
+    // Delete Existing Classifications
+    //
+    $(".clear-classifications").live("click", function(e) {
+        e.preventDefault();
+
+        // Remove the li's
+        $("#classifications").empty();
+
+        // Hide the well
+        $("#classifications_well").hide();
+    });
 });
