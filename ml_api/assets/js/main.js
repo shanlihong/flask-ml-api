@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     //
     // Hide data wells on load
     //
@@ -15,18 +14,32 @@ $(document).ready(function() {
         e.preventDefault();
 
         var newClass = $("#new_class").val();
-        var id = 1234;
 
-        // Add it to our list of classes
-        $("#classes").append('<li><span class="label label-success" data-id="' + id + '">' + newClass + '<a class="remove-class" title="Remove" href="#">&times</a></span></li>');
+        if (newClass === "") {
+            $(this).parent().parent().addClass('error');
+            return;
+        } else {
+            $(this).parent().parent().removeClass('error');
+        }
 
-        // Also, add it to our select boxes
-        $("#training_classes").append('<option value=' + id + '>' + newClass + '</option>')
+        $.ajax({
+            type: "POST",
+            url: '/api/v1/classes/',
+            contentType: "application/json",
+            data: JSON.stringify({"class": newClass }),
+            success: function(id) {
+                // Add it to our list of classes
+                $("#classes").append('<li><span class="label label-success" data-id="' + id + '">' + newClass + '<a class="remove-class" title="Remove" href="#">&times</a></span></li>');
 
-        // Reset text box
-        $("#new_class").val("");
+                // Also, add it to our select boxes
+                $("#training_classes").append('<option value=' + newClass + '>' + newClass + '</option>')
 
-        $("#classes_well").show();
+                // Reset text box
+                $("#new_class").val("");
+
+                $("#classes_well").show();
+            }
+        });
     });
 
     //
@@ -37,17 +50,27 @@ $(document).ready(function() {
 
         // Find the id
         var id = $(this).parent().attr("data-id");
+        var classOption = $(this).parent().text().replace("×", "");
 
-        // Remove the li
-        $(this).parent().remove();
+        var closure = this;
+        $.ajax({
+            type: "DELETE",
+            url: '/api/v1/classes/' + id,
+            contentType: "application/json",
+            data: "",
+            success: function() {
+                // Remove the li
+                $(closure).parent().remove();
 
-        // Also, remove option from our select boxes
-        $("#training_classes option[value='" + id + "']").remove();
+                // Also, remove option from our select boxes
+                $("#training_classes option[value='" + classOption + "']").remove();
 
-        if ($(".remove-class").length == 0) {
-            // Hide the well
-            $("#classes_well").hide();
-        }
+                if ($(".remove-class").length == 0) {
+                    // Hide the well
+                    $("#classes_well").hide();
+                }
+            }
+        });
     });
 
     //
@@ -56,14 +79,22 @@ $(document).ready(function() {
     $(".clear-classes").live("click", function(e) {
         e.preventDefault();
 
-        // Remove the li's
-        $("#classes").empty();
+        $.ajax({
+            type: "DELETE",
+            url: '/api/v1/classes/',
+            contentType: "application/json",
+            data: "",
+            success: function() {
+                // Remove the li's
+                $("#classes").empty();
 
-        // Remove from select
-        $("#training_classes").empty().append('<option value="default">Select a class</option>')
+                // Remove from select
+                $("#training_classes").empty().append('<option value="default">Select a class</option>')
 
-        // Hide the well
-        $("#classes_well").hide();
+                // Hide the well
+                $("#classes_well").hide();
+            }
+        });
     });
 
     //
@@ -74,18 +105,32 @@ $(document).ready(function() {
 
         var sampleText = $("#training_text").val();
         var sampleClass = $("#training_classes option:selected").val();
-        var id = 1234;
 
-        // Add it to our list of samples
-        $("#training_samples").append('<li class="outline" data-id=' + id + '>' + sampleText + ' &rarr; ' + sampleClass + '<a class="remove-sample" title="Remove" href="#">&times</a></span></li>');
+        if (sampleClass === "default" || sampleText === "") {
+            $(this).parent().parent().addClass('error');
+            return;
+        } else {
+            $(this).parent().parent().removeClass('error');
+        }
 
-        // Reset text box
-        $("#training_text").val("");
+        $.ajax({
+            type: "POST",
+            url: '/api/v1/training/',
+            contentType: "application/json",
+            data: JSON.stringify({"text": sampleText, "class": sampleClass }),
+            success: function(id) {
+                // Add it to our list of samples
+                $("#training_samples").append('<li class="outline" data-id=' + id + '>' + sampleText + ' &rarr; ' + sampleClass + '<a class="remove-sample" title="Remove" href="#">&times</a></span></li>');
 
-        // Reset select
-        $("#training_classes").val("default");
+                // Reset text box
+                $("#training_text").val("");
 
-        $("#samples_well").show();
+                // Reset select
+                $("#training_classes").val("default");
+
+                $("#samples_well").show();
+            }
+        });
     });
 
     //
@@ -97,13 +142,22 @@ $(document).ready(function() {
         // Find the id
         var id = $(this).parent().attr("data-id");
 
-        // Remove the li
-        $(this).parent().remove();
+        var closure = this;
+        $.ajax({
+            type: "DELETE",
+            url: '/api/v1/training/' + id,
+            contentType: "application/json",
+            data: "",
+            success: function() {
+                // Remove the li
+                $(closure).parent().remove();
 
-        if ($(".remove-sample").length == 0) {
-            // Hide the well
-            $("#samples_well").hide();
-        }
+                if ($(".remove-sample").length == 0) {
+                    // Hide the well
+                    $("#samples_well").hide();
+                }
+            }
+        });
     });
 
     //
@@ -112,11 +166,19 @@ $(document).ready(function() {
     $(".clear-samples").live("click", function(e) {
         e.preventDefault();
 
-        // Remove the li's
-        $("#training_samples").empty();
+        $.ajax({
+            type: "DELETE",
+            url: '/api/v1/training/',
+            contentType: "application/json",
+            data: "",
+            success: function() {
+                // Remove the li's
+                $("#training_samples").empty();
 
-        // Hide the well
-        $("#samples_well").hide();
+                // Hide the well
+                $("#samples_well").hide();
+            }
+        });
     });
 
     //
@@ -126,17 +188,30 @@ $(document).ready(function() {
         e.preventDefault();
 
         var newClassificationText = $("#new_classification_text").val();
-        var id = 1234;
-        var confidence = 0.98;
-        var classification = "FOO";
 
-        // Add it to our list of classifications
-        $("#classifications").append('<li class="outline" data-id=' + id + '>' + newClassificationText + ' &rarr; ' + classification + ' (' + confidence + ') <a class="remove-classification" title="Remove" href="#">&times</a></span></li>');
+        // Validations
+        if (newClassificationText === "") {
+            $(this).parent().parent().addClass('error');
+            return;
+        } else {
+            $(this).parent().parent().removeClass('error');
+        }
 
-        // Reset text box
-        $("#new_classification_text").val("");
+        $.ajax({
+            type: "POST",
+            url: '/api/v1/classifications/',
+            contentType: "application/json",
+            data: JSON.stringify({"text": newClassificationText }),
+            success: function(response) {
+                // Add it to our list of classifications
+                $("#classifications").append('<li class="outline" data-id=' + response.id + '>' + newClassificationText + ' &rarr; ' + response.classification + ' (' + response.confidence + ') <a class="remove-classification" title="Remove" href="#">&times</a></span></li>');
 
-        $("#classifications_well").show();
+                // Reset text box
+                $("#new_classification_text").val("");
+
+                $("#classifications_well").show();
+            }
+        });
     });
 
     //
@@ -148,13 +223,22 @@ $(document).ready(function() {
         // Find the id
         var id = $(this).parent().attr("data-id");
 
-        // Remove the li
-        $(this).parent().remove();
+        var closure = this;
+        $.ajax({
+            type: "DELETE",
+            url: '/api/v1/classifications/' + id,
+            contentType: "application/json",
+            data: "",
+            success: function() {
+                // Remove the li
+                $(closure).parent().remove();
 
-        if ($(".remove-classification").length == 0) {
-            // Hide the well
-            $("#classifications_well").hide();
-        }
+                if ($(".remove-classification").length == 0) {
+                    // Hide the well
+                    $("#classifications_well").hide();
+                }
+            }
+        });
     });
 
     //
@@ -163,10 +247,18 @@ $(document).ready(function() {
     $(".clear-classifications").live("click", function(e) {
         e.preventDefault();
 
-        // Remove the li's
-        $("#classifications").empty();
+        $.ajax({
+            type: "DELETE",
+            url: '/api/v1/classifications/',
+            contentType: "application/json",
+            data: "",
+            success: function() {
+                // Remove the li's
+                $("#classifications").empty();
 
-        // Hide the well
-        $("#classifications_well").hide();
+                // Hide the well
+                $("#classifications_well").hide();
+            }
+        });
     });
 });
