@@ -1,3 +1,5 @@
+TEST
+
 flask-ml-api
 ============
 
